@@ -26,6 +26,7 @@
       <string>Snakefile</string>
       <string>smk</string>
       <string>tac</string>
+      <string>yu-py</string>
     </array>
     <key>firstLineMatch</key>
     <string>^#![ \t]*/.*\bpython[\d\.]*\b</string>
@@ -590,6 +591,18 @@ it's probably control flow like:
           <dict>
             <key>include</key>
             <string>#comments</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#yupp-comment</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#yupp-quoted</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#yupp-application</string>
           </dict>
           <dict>
             <key>include</key>
@@ -8736,6 +8749,76 @@ indirectly through syntactic constructs
             <string>storage.type.format.python</string>
             <key>match</key>
             <string>(\w)</string>
+          </dict>
+        </array>
+      </dict>
+      <key>yupp-comment</key>
+      <dict>
+        <key>name</key>
+        <string>comment.yupp</string>
+        <key>begin</key>
+        <string>\(\$\!</string>
+        <key>end</key>
+        <string>\)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#yupp-comment-parentheses-eater</string>
+          </dict>
+        </array>
+      </dict>
+      <key>yupp-comment-parentheses-eater</key>
+      <dict>
+        <key>begin</key>
+        <string>\(</string>
+        <key>end</key>
+        <string>\)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#yupp-comment-parentheses-eater</string>
+          </dict>
+        </array>
+      </dict>
+      <key>yupp-quoted</key>
+      <dict>
+        <key>name</key>
+        <string>string.yupp</string>
+        <key>begin</key>
+        <string>\(\$(macro|code|quote|`)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.yupp</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>\)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#yupp-comment-parentheses-eater</string>
+          </dict>
+        </array>
+      </dict>
+      <key>yupp-application</key>
+      <dict>
+        <key>name</key>
+        <string>source.yupp</string>
+        <key>begin</key>
+        <string>\(\$</string>
+        <key>end</key>
+        <string>\)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#yupp-comment-parentheses-eater</string>
           </dict>
         </array>
       </dict>

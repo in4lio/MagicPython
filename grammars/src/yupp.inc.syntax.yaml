@@ -1,0 +1,30 @@
+---
+yupp-comment:
+  name: comment.yupp
+  begin: \(\$\!
+  end: \)
+  patterns:
+  - include: '#yupp-comment-parentheses-eater'
+
+yupp-comment-parentheses-eater:
+  begin: \(
+  end: \)
+  patterns:
+  - include: '#yupp-comment-parentheses-eater'
+
+yupp-quoted:
+  name: string.yupp
+  begin: \(\$(macro|code|quote|`)
+  beginCaptures:
+    '1': {name: keyword.yupp}
+  end: \)
+  patterns:
+  - include: '#yupp-comment-parentheses-eater'
+
+yupp-application:
+  name: source.yupp
+  begin: \(\$
+  end: \)
+  patterns:
+  - include: '#yupp-comment-parentheses-eater'
+...

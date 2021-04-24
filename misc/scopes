@@ -5,6 +5,7 @@ comment.typehint.ignore.notation.python
 comment.typehint.punctuation.notation.python
 comment.typehint.type.notation.python
 comment.typehint.variable.notation.python
+comment.yupp
 constant.character.escape.python
 constant.character.escape.regexp
 constant.character.format.placeholder.other.python
@@ -60,6 +61,7 @@ keyword.operator.python
 keyword.operator.quantifier.regexp
 keyword.operator.unpacking.arguments.python
 keyword.operator.unpacking.parameter.python
+keyword.yupp
 meta.attribute.python
 meta.backreference.named.regexp
 meta.backreference.regexp
@@ -128,6 +130,7 @@ punctuation.separator.inheritance.python
 punctuation.separator.parameters.python
 punctuation.separator.period.python
 punctuation.separator.slice.python
+source.yupp
 storage.modifier.declaration.python
 storage.modifier.flag.regexp
 storage.type.class.python
@@ -153,6 +156,7 @@ string.quoted.raw.single.python
 string.quoted.single.python
 string.regexp.quoted.multi.python
 string.regexp.quoted.single.python
+string.yupp
 support.function.builtin.python
 support.function.magic.python
 support.other.escape.special.regexp

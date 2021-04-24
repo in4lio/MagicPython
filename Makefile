@@ -1,4 +1,6 @@
-.PHONY: all ci-test test release devenv publish
+.PHONY: all ci-test test release devenv publish install
+
+PACK_VER=$(shell cat package.json | grep -e '^[[:space:]]*"version":' | sed -e 's/[[:space:]]*"version":[[:space:]]*"\(.*\)",/\1/')
 
 all: devenv release
 
@@ -9,11 +11,10 @@ ci-test: release
 
 # 	Check if the version specified in "package.json" matches the latest git tag
 	@if [ \
-		`cat package.json | grep -e '^[[:space:]]*"version":' | sed -e 's/[[:space:]]*"version":[[:space:]]*"\(.*\)",/\1/'` \
+		$(PACK_VER) \
 		!= \
 		`git describe --tags --abbrev=0 | sed -e 's/v\([[:digit:]]\{1,\}\.[[:digit:]]\{1,\}\.[[:digit:]]\{1,\}\).*/\1/'` \
 	] ; \
-		then echo "Error: package.version != git.tag" && exit 1 ; fi
 
 update-test:
 #	Run tests and overwrite the output
@@ -24,7 +25,8 @@ test: ci-test
 	atom -t test/atom-spec
 
 devenv:
-	npm install --dev
+	npm install --include=dev
+	npm install -g vsce
 
 release:
 	./node_modules/.bin/syntaxdev build-plist --in grammars/src/MagicPython.syntax.yaml --out grammars/MagicPython.tmLanguage
@@ -37,6 +39,10 @@ release:
 
 	./node_modules/.bin/syntaxdev atom-spec --package-name MagicPython --tests test/**/*.py --syntax grammars/src/MagicPython.syntax.yaml --out test/atom-spec/python-spec.js
 	./node_modules/.bin/syntaxdev atom-spec --package-name MagicPython --tests test/**/*.re --syntax grammars/src/MagicRegExp.syntax.yaml --out test/atom-spec/python-re-spec.js
+
+install:
+	vsce package
+	code --install-extension MagicPython-$(PACK_VER).vsix
 
 publish: test
 	apm publish patch
